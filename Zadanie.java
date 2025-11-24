@@ -1,8 +1,5 @@
 package stream.zadanie;
 
-import java.io.Serializable;
-import java.util.function.Predicate;
-
 class Zadanie {
     public static void main(String[] args) {
         /*
@@ -18,14 +15,14 @@ class Zadanie {
         String filenameCar = "src/stream/zadanie/car.txt";
 
         // box1
-        Box<Person> box1 = new Box<>((Predicate<Person> & Serializable) person -> person.age() > 30);
+        Box<Person> box1 = new Box<>(person -> person.age() > 30);
 
         box1.addElement(new Person("Albert", 28));
         box1.addElement(new Person("Jan", 33));
         System.out.println(box1.getSourceList());
 
         // box2
-        Box<Car> box2 = new Box<>((Predicate<Car> & Serializable) car -> car.model().equals("X5"));
+        Box<Car> box2 = new Box<>(car -> car.model().equals("X5"));
 
         box2.addElement(new Car("BMW", "X3"));
         box2.addElement(new Car("BMW", "X5"));
