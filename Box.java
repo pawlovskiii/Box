@@ -32,7 +32,7 @@ class Box<T extends Serializable> implements Serializable {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(this);
         } catch (IOException e) {
-            System.out.println("EXCEPTION: " + e.getMessage());
+            throw new BoxSerializationException("Failed to save Box to file: " + filename, e);
         }
     }
 
@@ -40,8 +40,7 @@ class Box<T extends Serializable> implements Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (Box<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("EXCEPTION: " + e.getMessage());
-            return null;
+            throw new BoxDeserializationException("Failed to load the box from file: " + filename, e);
         }
     }
 }
