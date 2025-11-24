@@ -8,14 +8,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
-class Box<T> implements Serializable {
+class Box<T extends Serializable> implements Serializable {
 
     private final List<T> sourceList = new ArrayList<>();
-    private final Predicate<T> isValid;
+    private final SerializablePredicate<T> isValid;
 
-    public Box(Predicate<T> isValid) {
+    public Box(SerializablePredicate<T> isValid) {
         this.isValid = isValid;
     }
 
@@ -37,7 +36,7 @@ class Box<T> implements Serializable {
         }
     }
 
-    public static <T> Box<T> loadFromFile(String filename) {
+    public static <T extends Serializable> Box<T> loadFromFile(String filename) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (Box<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
